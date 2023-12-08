@@ -14,6 +14,9 @@ public class Project extends JFrame {
     ImageIcon stdIcon,admIcon;
     JTextField searchTf,idTf;
     JPasswordField passwordTp;
+    JMenu pfeMenu,profMenu;
+    JMenuItem creatPfe,updatePfe,deletePfe,listingPfe,creatProf,updateProf,deleteProf,listingProf;
+    JMenuBar adminMenu;
     public Project() {
         setTitle("Home");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -95,7 +98,31 @@ public class Project extends JFrame {
     }
     
     public JPanel createAdminSpace(){
+
             adminSpacePan=new JPanel();
+            pfeMenu = new JMenu(" PFE ");
+            profMenu = new JMenu(" PROF ");
+            creatPfe= new JMenuItem("Creat");
+            updatePfe= new JMenuItem("Update");
+            deletePfe= new JMenuItem("Delete");
+            listingPfe= new JMenuItem("Listing");
+            creatProf= new JMenuItem("Creat");
+            updateProf= new JMenuItem("Update");
+            deleteProf= new JMenuItem("Delete");
+            listingProf= new JMenuItem("Listing");
+            pfeMenu.add(creatPfe);
+            pfeMenu.add(updatePfe);
+            pfeMenu.add(deletePfe);
+            pfeMenu.add(listingPfe);
+            profMenu.add(creatProf);
+            profMenu.add(updateProf);
+            profMenu.add(deleteProf);
+            profMenu.add(listingProf);
+            adminMenu = new JMenuBar() ;
+            adminMenu.add(pfeMenu);
+            adminMenu.add(profMenu);
+            adminSpacePan.add(adminMenu);
+            
             return adminSpacePan;
     }
     public JPanel createHomePanel() {
