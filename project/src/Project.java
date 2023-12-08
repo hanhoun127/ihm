@@ -81,7 +81,7 @@ public class Project extends JFrame {
             @Override
             public void actionPerformed(ActionEvent ev) {
                 String password = new String(passwordTp.getPassword());
-                if (!idTf.getText().equals("1HN2MR2004") || !password.equals("a1s2d3f4")) {
+                if (!idTf.getText().equals("12345678") || !password.equals("12345678")) {
                     loginLab.setText("The ID or the password is incorrect! Try again.");
                 } else {
                     loginLab.setText("");
