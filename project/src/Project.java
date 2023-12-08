@@ -1,7 +1,9 @@
 import javax.swing.*;
+import javax.swing.border.*;
+
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
+
 
 public class Project extends JFrame {
     private JPanel cardPanel;
@@ -10,7 +12,7 @@ public class Project extends JFrame {
     public Project() {
         setTitle("Home");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(600, 400);
+        setSize(550, 325);
 
         // Create card panel with CardLayout
         cardPanel = new JPanel();
@@ -18,11 +20,11 @@ public class Project extends JFrame {
         cardPanel.setLayout(cardLayout);
 
         // Create Student panel
-        JPanel studentPanel = createPanel("Student Panel", Color.GREEN);
+        JPanel studentPanel = createPanel("Student Panel");
         addNavigationButton(studentPanel, "studentPanel");
 
         // Create Admin panel
-        JPanel adminPanel = createPanel("Admin Panel", Color.BLUE);
+        JPanel adminPanel = createPanel("Admin Panel");
         addNavigationButton(adminPanel, "adminPanel");
 
         // Create Home panel with buttons to switch between Student and Admin panels
@@ -38,14 +40,13 @@ public class Project extends JFrame {
 
         // Set default panel
         cardLayout.show(cardPanel, "homePanel");
-
+        setResizable(false);
         setVisible(true);
     }
 
-    private JPanel createPanel(String title, Color color) {
+    private JPanel createPanel(String title) {
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
-        panel.setBackground(color);
 
         JLabel label = new JLabel(title, SwingConstants.CENTER);
         label.setFont(new Font("Arial", Font.BOLD, 24));
@@ -56,8 +57,9 @@ public class Project extends JFrame {
 
     private JPanel createHomePanel() {
         JPanel homePanel = new JPanel(new BorderLayout());
-
-        JButton studentButton = new JButton("Student");
+        JButton studentButton = new JButton("                 GO To Student Space                  ");
+        ImageIcon stdIcon=new ImageIcon(getClass().getResource("img/student.png"));
+        JLabel stdLab=new JLabel(stdIcon);
         studentButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -65,21 +67,27 @@ public class Project extends JFrame {
             }
         });
 
-        JButton adminButton = new JButton("Admin");
+        JButton adminButton = new JButton("                  GO To Admin Space                      ");
+        ImageIcon admIcon=new ImageIcon(getClass().getResource("img/admin.png"));
+        JLabel admLab=new JLabel(admIcon);
         adminButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 cardLayout.show(cardPanel, "adminPanel");
             }
         });
-
-        homePanel.add(studentButton, BorderLayout.WEST);
-        homePanel.add(adminButton, BorderLayout.EAST);
-
-        // Content for the Home panel
-        JLabel homeContentLabel = new JLabel("Welcome to the Home Page!", SwingConstants.CENTER);
-        homeContentLabel.setFont(new Font("Arial", Font.BOLD, 24));
-        homePanel.add(homeContentLabel, BorderLayout.CENTER);
+        JPanel stdPan=new JPanel();
+        stdPan.add(stdLab);
+        stdPan.add(studentButton); 
+        stdPan.setBorder(new LineBorder(Color.BLACK, 2));
+        stdPan.setLayout(new BoxLayout(stdPan,BoxLayout.Y_AXIS));
+        JPanel admPan=new JPanel();
+        admPan.add(admLab);
+        admPan.add(adminButton);
+        admPan.setBorder(new LineBorder(Color.BLACK, 2));
+        admPan.setLayout(new BoxLayout(admPan,BoxLayout.Y_AXIS));
+        homePanel.add(stdPan,BorderLayout.WEST);
+        homePanel.add(admPan,BorderLayout.CENTER);
 
         return homePanel;
     }
@@ -97,6 +105,6 @@ public class Project extends JFrame {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new Project());
+        new Project();
     }
 }
