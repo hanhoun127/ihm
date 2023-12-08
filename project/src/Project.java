@@ -17,6 +17,7 @@ public class Project extends JFrame {
     JMenu pfeMenu,profMenu;
     JMenuItem creatPfe,updatePfe,deletePfe,listingPfe,creatProf,updateProf,deleteProf,listingProf;
     JMenuBar adminMenu;
+    Container ContentPane;
     public Project() {
         setTitle("Home");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -85,7 +86,6 @@ public class Project extends JFrame {
                 } else {
                     loginLab.setText("");
                     adminSpace = createAdminSpace();
-                    addNavigationButton(adminSpace, "adminSpace");
                     cardPanel.add(adminSpace, "adminSpace"); 
                     cardLayout.show(cardPanel, "adminSpace"); 
                     setSize(550, 325);
@@ -121,8 +121,8 @@ public class Project extends JFrame {
             adminMenu = new JMenuBar() ;
             adminMenu.add(pfeMenu);
             adminMenu.add(profMenu);
-            adminSpacePan.add(adminMenu);
-            
+            ContentPane=getContentPane();
+            ContentPane.add(adminMenu,BorderLayout.NORTH);
             return adminSpacePan;
     }
     public JPanel createHomePanel() {
