@@ -8,7 +8,7 @@ import java.awt.event.*;
 public class Project extends JFrame {
     CardLayout cardLayout;
     JPanel stdPan,admPan,studentPanel,adminPanel,homePanel,cardPanel,studentPan,adminPan,searchPanel;
-    JPanel loginPan;
+    JPanel loginPan,adminSpace,adminSpacePan;
     JButton studentButton,adminButton,homeButton,searchBtn,loginBtn;
     JLabel stdLab,admLab,searchLab,idLab,passwordLab,loginLab;
     ImageIcon stdIcon,admIcon;
@@ -73,20 +73,31 @@ public class Project extends JFrame {
         adminPan.add(loginPan);
         loginLab=new JLabel(" ");
         adminPan.add(loginLab,BorderLayout.SOUTH);
-        loginBtn.addActionListener(new ActionListener(){
+        loginBtn.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent ev){
-                String Password=new String (passwordTp.getPassword());
-                if(!idTf.getText().equals("1HN2MR2004") || !Password.equals("a1s2d3f4")){
-                    loginLab.setText("the id or the password incorrect! try agin");
-                }else{
-                    loginLab.setText("enter");
+            public void actionPerformed(ActionEvent ev) {
+                String password = new String(passwordTp.getPassword());
+                if (!idTf.getText().equals("1HN2MR2004") || !password.equals("a1s2d3f4")) {
+                    loginLab.setText("The ID or the password is incorrect! Try again.");
+                } else {
+                    loginLab.setText("");
+                    adminSpace = createAdminSpace();
+                    addNavigationButton(adminSpace, "adminSpace");
+                    cardPanel.add(adminSpace, "adminSpace"); 
+                    cardLayout.show(cardPanel, "adminSpace"); 
+                    setSize(550, 325);
                 }
             }
         });
+        
+        
         return adminPan;
     }
     
+    public JPanel createAdminSpace(){
+            adminSpacePan=new JPanel();
+            return adminSpacePan;
+    }
     public JPanel createHomePanel() {
         homePanel  = new JPanel(new BorderLayout());
         studentButton = new JButton("                 GO To Student Space                  ");
