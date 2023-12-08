@@ -3,7 +3,7 @@ import javax.swing.*;
 import java.awt.event.*;
 
 public class project extends JFrame {
-    JPanel jp1,jpc1,jpc2,jp2,jpc3,jpc4,jp3,jp4,jp5,bPanel1,bpanel2,bpanel3,cardpanel;
+    JPanel jp1,jpc1,jpc2,jp2,jpc3,jpc4,jp3,jp4,jp5,bPanel1,bpanel2,bpanel3,panel,buttonPanel;
     JLabel lb1,lb2,lb3,lb4,lb5,lb6,lb7,lb8,lb9,lb10,lb11;
     JTextField tf1,tf2,tf3,tf4,tf5,tf6,tf7,tf8,tf9,tf10,tf11,tf12;
     JButton btn1,btn2,btn3,btn4,btn5,btn6,btn7,btn8;
@@ -20,27 +20,30 @@ public project(){
     setDefaultCloseOperation(EXIT_ON_CLOSE);
     setTitle("Home");
     setBounds(450, 200, 400, 300);
-
-    cardpanel=new JPanel();
-    cardpanel.setLayout(cardLayout);
+    panel=new JPanel();
+    buttonPanel=new JPanel();
+    panel.setLayout(cardLayout);
 
     btn1=new JButton("Student Space");
     btn1.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent e){
-            cardLayout.show(cardpanel,"1");
+            cardLayout.show(panel,"1");
         }
     });
 
     btn2=new JButton("Admin Space");
     btn2.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent e){
-            cardLayout.show(cardpanel,"2");
+            cardLayout.show(panel,"2");
         }
     });
 
-    cardpanel.add(btn1);
-    cardpanel.add(btn2);
+    buttonPanel.add(btn1);
+    buttonPanel.add(btn2);
+    buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
+    panel.add(buttonPanel,BorderLayout.CENTER);
 
+    
     jp1=new JPanel();
     tf1=new JTextField();
     btn3=new JButton("Search");
@@ -53,7 +56,7 @@ public project(){
     jp1.add(jpc2);
     jp1.add(jpc1,BorderLayout.NORTH);
     jp1.add(jpc2,BorderLayout.SOUTH);
-    cardpanel.add(jp1,"1");
+    panel.add(jp1,"1");
 
     jp2=new JPanel();
     jpc3= new JPanel();
@@ -73,11 +76,11 @@ public project(){
     jpc4.setLayout(new FlowLayout());
     jp2.add(jpc3,BorderLayout.NORTH);
     jp2.add(jpc4,BorderLayout.SOUTH);
-    cardpanel.add(jp2,"2");
+    panel.add(jp2,"2");
 
 
 
-    this.add(cardpanel,BorderLayout.CENTER);
+    this.add(panel);
     setVisible(true);
 }   
 public static void main(String[]args){
