@@ -8,7 +8,7 @@ import java.awt.event.*;
 public class Project extends JFrame {
     CardLayout cardLayout;
     JPanel stdPan,admPan,studentPanel,adminPanel,homePanel,cardPanel,studentPan,adminPan,searchPanel;
-    JPanel loginPan,adminSpacePan,createPfePan,createProfPan;
+    JPanel loginPan,adminSpace,adminSpacePan,createPfePan,createProfPan;
     JButton studentButton,adminButton,homeButton,searchBtn,loginBtn;
     JLabel stdLab,admLab,searchLab,idLab,passwordLab,loginLab,referenceLab,titleLab,authorLab,yearLab,supervisorLab;
     ImageIcon stdIcon,admIcon;
@@ -85,8 +85,9 @@ public class Project extends JFrame {
                     loginLab.setText("The ID or the password is incorrect! Try again.");
                 } else {
                     loginLab.setText("");
-                    cardPanel.add(adminSpacePan, "adminSpacePan"); 
-                    cardLayout.show(cardPanel, "adminSpacePan"); 
+                    adminSpace = createAdminSpace();
+                    cardPanel.add(adminSpace, "adminSpace"); 
+                    cardLayout.show(cardPanel, "adminSpace"); 
                     setSize(550, 325);
                 }
             }
@@ -99,17 +100,14 @@ public class Project extends JFrame {
     public JPanel createAdminSpace(){
 
             adminSpacePan=new JPanel();
-            adminSpacePan.add(new JLabel("welcome to the admin space"),BorderLayout.CENTER);
             pfeMenu = new JMenu("Memoire");
             profMenu = new JMenu("Professor");
             creatPfe= new JMenuItem("Create");
             creatPfe.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                createPfePan = createPfePanel();
-                cardPanel.add(createPfePan, "createPfePan"); 
-                cardLayout.show(cardPanel, "createPfePan"); 
-             }
+                
+            }
             });
             updatePfe= new JMenuItem("Update");
             updatePfe.addActionListener(new ActionListener() {
