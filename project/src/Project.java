@@ -8,14 +8,14 @@ import java.awt.event.*;
 public class Project extends JFrame {
     CardLayout cardLayout;
     JPanel stdPan,admPan,studentPanel,adminPanel,homePanel,cardPanel,studentPan,adminPan,searchPanel;
-    JPanel loginPan,adminSpace,adminSpacePan;
+    JPanel loginPan,adminSpacePan,createPfePan,createProfPan;
     JButton studentButton,adminButton,homeButton,searchBtn,loginBtn;
-    JLabel stdLab,admLab,searchLab,idLab,passwordLab,loginLab;
+    JLabel stdLab,admLab,searchLab,idLab,passwordLab,loginLab,referenceLab,titleLab,authorLab,yearLab,supervisorLab;
     ImageIcon stdIcon,admIcon;
-    JTextField searchTf,idTf;
+    JTextField searchTf,idTf,referenceTf,titleTf,authorTf,yearTf,supervisorTf;
     JPasswordField passwordTp;
     JMenu pfeMenu,profMenu;
-    JMenuItem creatPfe,updatePfe,deletePfe,listingPfe,creatProf,updateProf,deleteProf,listingProf;
+    JMenuItem creatPfe,updatePfe,listePfe,creatProf,updateProf,listeProf;
     JMenuBar adminMenu;
     Container ContentPane;
     public Project() {
@@ -85,9 +85,8 @@ public class Project extends JFrame {
                     loginLab.setText("The ID or the password is incorrect! Try again.");
                 } else {
                     loginLab.setText("");
-                    adminSpace = createAdminSpace();
-                    cardPanel.add(adminSpace, "adminSpace"); 
-                    cardLayout.show(cardPanel, "adminSpace"); 
+                    cardPanel.add(adminSpacePan, "adminSpacePan"); 
+                    cardLayout.show(cardPanel, "adminSpacePan"); 
                     setSize(550, 325);
                 }
             }
@@ -100,24 +99,59 @@ public class Project extends JFrame {
     public JPanel createAdminSpace(){
 
             adminSpacePan=new JPanel();
-            pfeMenu = new JMenu(" PFE ");
-            profMenu = new JMenu(" PROF ");
-            creatPfe= new JMenuItem("Creat");
+            adminSpacePan.add(new JLabel("welcome to the admin space"),BorderLayout.CENTER);
+            pfeMenu = new JMenu("Memoire");
+            profMenu = new JMenu("Professor");
+            creatPfe= new JMenuItem("Create");
+            creatPfe.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                createPfePan = createPfePanel();
+                cardPanel.add(createPfePan, "createPfePan"); 
+                cardLayout.show(cardPanel, "createPfePan"); 
+             }
+            });
             updatePfe= new JMenuItem("Update");
-            deletePfe= new JMenuItem("Delete");
-            listingPfe= new JMenuItem("Listing");
-            creatProf= new JMenuItem("Creat");
+            updatePfe.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+            }
+            });
+            listePfe= new JMenuItem("Liste");
+            listePfe.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+            }
+            });
+            creatProf= new JMenuItem("Create");
+            creatPfe.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+            }
+            });
             updateProf= new JMenuItem("Update");
-            deleteProf= new JMenuItem("Delete");
-            listingProf= new JMenuItem("Listing");
+            updatePfe.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+            }
+            });
+            listeProf= new JMenuItem("Liste");
+            listeProf.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+            }
+            });
             pfeMenu.add(creatPfe);
             pfeMenu.add(updatePfe);
-            pfeMenu.add(deletePfe);
-            pfeMenu.add(listingPfe);
+            pfeMenu.add(listePfe);
             profMenu.add(creatProf);
             profMenu.add(updateProf);
-            profMenu.add(deleteProf);
-            profMenu.add(listingProf);
+            profMenu.add(listeProf);
             adminMenu = new JMenuBar() ;
             adminMenu.add(pfeMenu);
             adminMenu.add(profMenu);
@@ -125,6 +159,32 @@ public class Project extends JFrame {
             ContentPane.add(adminMenu,BorderLayout.NORTH);
             return adminSpacePan;
     }
+
+    public JPanel createPfePanel(){
+        createPfePan =new JPanel();
+        referenceLab=new JLabel("Reference");
+        referenceTf=new JTextField(25);
+        createPfePan.add(referenceLab);
+        createPfePan.add(referenceTf);
+        titleLab=new JLabel("Title");
+        titleTf=new JTextField(25);
+        createPfePan.add(titleLab);
+        createPfePan.add(titleTf);
+        authorLab=new JLabel("Author");
+        authorTf=new JTextField(25);
+        createPfePan.add(authorLab);
+        createPfePan.add(authorTf);
+        yearLab=new JLabel("Year");
+        yearTf=new JTextField(25);
+        createPfePan.add(yearLab);
+        createPfePan.add(yearTf);
+        supervisorLab=new JLabel("Supervisor");
+        supervisorTf=new JTextField(25);
+        createPfePan.add(supervisorLab);
+        createPfePan.add(supervisorTf);
+        return createPfePan;
+    }
+
     public JPanel createHomePanel() {
         homePanel  = new JPanel(new BorderLayout());
         studentButton = new JButton("                 GO To Student Space                  ");
