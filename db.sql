@@ -14,7 +14,8 @@ CREATE TABLE memoire (
 );
 
 CREATE TABLE teacher (
-    name VARCHAR(50) NOT NULL PRIMARY KEY,
+    id INT  NOT NULL PRIMARY KEY,
+    name VARCHAR(50) NOT NULL ,
     email VARCHAR (255) NOT NULL,
     specialty VARCHAR(100)
 );
