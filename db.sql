@@ -3,7 +3,7 @@ CREATE DATABASE ihm;
 use ihm
 
 CREATE TABLE teacher (
-    id VARCHAR(25)  NOT NULL PRIMARY KEY,
+    id INT  NOT NULL AUTO_INCREMENT PRIMARY KEY ,
     name VARCHAR(50) NOT NULL UNIQUE,
     email VARCHAR (255) NOT NULL,
     specialty VARCHAR(100)
@@ -11,7 +11,7 @@ CREATE TABLE teacher (
 
 CREATE TABLE memoire (
     referenceNbr VARCHAR(20) PRIMARY KEY NOT NULL ,
-    id_teacher VARCHAR(25) NOT NULL,
+    id_teacher INT NOT NULL,
     title VARCHAR(255) NOT NULL,
     author VARCHAR(255) NOT NULL,
     year YEAR NOT NULL,
