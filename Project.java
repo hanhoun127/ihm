@@ -215,7 +215,7 @@ public class Project extends JFrame {
                 listPfePan=displayPfe();
                 adminSpacePan.add(listPfePan,"listPfePan");
                 cardLayout.show(adminSpacePan, "listPfePan");
-                setSize(550, 500);
+                setSize(480, 500);
             }
             });
             creatProf= new JMenuItem("Create");
@@ -288,7 +288,7 @@ public class Project extends JFrame {
                 String supervisor = supervisorTf.getText();
                 String summary =summaryTa.getText();
                 try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ihm", "root", "")) {
-                String query = "INSERT INTO memoire (referenceNbr, title, author, year, supervisor,summary) VALUES (?, ?, ?, ?, ?,?)";
+                String query = "INSERT INTO memoire (referenceNbr,id_teacher, title, author, year, supervisor,summary) VALUES (?,(SELECT id FROM teacher WHERE name=?), ?, ?, ?, ?,?)";
                 try (PreparedStatement pst = con.prepareStatement(query)) {
                 if (reference.isEmpty() || title.isEmpty() || author.isEmpty() || year.isEmpty() || supervisor.isEmpty() || summary.isEmpty()) {
                 JOptionPane.showMessageDialog(createPfePan, "All fields are required.");
@@ -296,13 +296,20 @@ public class Project extends JFrame {
                 }else{
                     int Year = Integer.parseInt(yearTf.getText());
                     pst.setString(1, reference);
-                    pst.setString(2, title);
-                    pst.setString(3, author);
-                    pst.setInt(4, Year);
-                    pst.setString(5, supervisor);
-                    pst.setString(6, summary);
+                    pst.setString(2, supervisor);
+                    pst.setString(3, title);
+                    pst.setString(4, author);
+                    pst.setInt(5, Year);
+                    pst.setString(6, supervisor);
+                    pst.setString(7, summary);
                     pst.executeUpdate();
                     JOptionPane.showMessageDialog(createPfePan, "Data inserted into Memoire table successfully.");
+                    referenceTf.setText("");
+                    titleTf.setText("");
+                    authorTf.setText("");
+                    yearTf.setText("");
+                    supervisorTf.setText("");
+                    summaryTa.setText("");
                 }   
             }
         } catch (SQLException ex) {
@@ -319,22 +326,21 @@ public class Project extends JFrame {
     }
     //display pfe list
     public JPanel displayPfe(){
-        pfedata=new String[6];
-        pfetablemodel=new DefaultTableModel(pfetab, 0);
-        pfetable= new JTable(pfetablemodel);
         listPfePan=new JPanel();
-        listPfePan.add(pfetable);
-        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(pfetablemodel);
-        pfetable.setRowSorter(sorter);
-        listPfePan = new JPanel(new BorderLayout());
-        JScrollPane scrollPane = new JScrollPane(pfetable);
-        listPfePan.add(scrollPane, BorderLayout.CENTER);
         removePfe=new JButton("Remove");
         updatePfe=new JButton("Update");
         JPanel btn=new JPanel();
         btn.add(updatePfe);
         btn.add(removePfe);
-
+        listPfePan.add(btn);
+        pfedata=new String[6];
+        pfetablemodel=new DefaultTableModel(pfetab, 0);
+        pfetable= new JTable(pfetablemodel);
+        listPfePan.add(pfetable);
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(pfetablemodel);
+        pfetable.setRowSorter(sorter);
+        JScrollPane scrollPane = new JScrollPane(pfetable);
+        listPfePan.add(scrollPane);
         try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ihm", "root", "")) {
             String query = "SELECT referenceNbr, title, author, year, supervisor, summary FROM memoire";
             try (PreparedStatement pst = con.prepareStatement(query)) {
@@ -356,8 +362,107 @@ public class Project extends JFrame {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(this, "Error retrieving data from Memoire table");
         }
+        removePfe.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int selectedRow = pfetable.getSelectedRow();
+                if (selectedRow != -1) {
+                try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ihm", "root", "")) {
+                    String query = "DELETE FROM memoire WHERE referenceNbr=? AND title=? AND author=? AND year=? AND supervisor=? AND summary=?";
+                try (PreparedStatement pst = con.prepareStatement(query)) {
+                String reference = (String) pfetable.getValueAt(selectedRow, 0);
+                String title = (String) pfetable.getValueAt(selectedRow, 1);
+                String author = (String) pfetable.getValueAt(selectedRow, 2);
+                String year = pfetable.getValueAt(selectedRow, 3).toString();
+                String supervisor = (String) pfetable.getValueAt(selectedRow, 4);
+                String summary =(String) pfetable.getValueAt(selectedRow, 5);
+                pst.setString(1, reference);
+                pst.setString(2, title);
+                pst.setString(3, author);
+                pst.setString(4, year);
+                pst.setString(5, supervisor);
+                pst.setString(6, summary);
+                pst.executeUpdate();
+                JOptionPane.showMessageDialog(createPfePan, "Data deleted from Memoire table successfully.");
+                pfetablemodel.removeRow(pfetable.getSelectedRow());
+            }
+        } catch (SQLException ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(createPfePan, "Error deleting data into Memoire table");
+        }} else {
+            JOptionPane.showMessageDialog(createPfePan, "Please select a row to delete.");
+        }
+            }});
+            updatePfe.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    int selectedRow = pfetable.getSelectedRow();
+                    if (selectedRow != -1) {
+                        createPfePan = createPfePanel();
+                        adminSpacePan.add(createPfePan, "createPfePan");
+                        cardLayout.show(adminSpacePan, "createPfePan");
+                        referenceTf.setText((String) pfetable.getValueAt(selectedRow, 0));
+                        titleTf.setText((String) pfetable.getValueAt(selectedRow, 1));
+                        authorTf.setText((String) pfetable.getValueAt(selectedRow, 2));
+                        yearTf.setText(pfetable.getValueAt(selectedRow, 3).toString());
+                        supervisorTf.setText((String) pfetable.getValueAt(selectedRow, 4));
+                        summaryTa.setText((String) pfetable.getValueAt(selectedRow, 5));
+                        createPfePan.remove(addPfe);
+                        JButton save=new JButton("Save");
+                        createPfePan.add(save);
+                        setSize(470, 350);
+                        supervisorTf.setEditable(false);
+                        save.addActionListener(new ActionListener() {
+                            @Override
+                            public void actionPerformed(ActionEvent e) {
+                                try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ihm", "root", "")) {
+                                    String query = "UPDATE memoire SET referenceNbr=?, title=?, author=?, year=?, summary=? WHERE referenceNbr=? AND title=? AND author=? AND year=? AND supervisor=? AND summary=?";
+                                    try (PreparedStatement pst = con.prepareStatement(query)) {
+                                        String reference = referenceTf.getText();
+                                        String title = titleTf.getText();
+                                        String author = authorTf.getText();
+                                        String year = yearTf.getText();
+                                        String supervisor = supervisorTf.getText();
+                                        String summary =summaryTa.getText();
+                                        if(reference.isEmpty() || title.isEmpty() || author.isEmpty() || year.isEmpty() || supervisor.isEmpty() || summary.isEmpty()){
+                                            JOptionPane.showMessageDialog(createPfePan, "All fields are required.");
+                                            return;
+                                        } else {
+                                            int Year = Integer.parseInt(yearTf.getText());
+                                            pst.setString(1, reference);
+                                            pst.setString(2, title);
+                                            pst.setString(3, author);
+                                            pst.setInt(4, Year);
+                                            pst.setString(5, summary);
+                                            pst.setString(6, (String) pfetable.getValueAt(selectedRow, 0));
+                                            pst.setString(7, (String) pfetable.getValueAt(selectedRow, 1));
+                                            pst.setString(8, (String) pfetable.getValueAt(selectedRow, 2));
+                                            pst.setString(9, (String) pfetable.getValueAt(selectedRow, 3).toString());
+                                            pst.setString(10, (String) pfetable.getValueAt(selectedRow, 4));
+                                            pst.setString(11, (String) pfetable.getValueAt(selectedRow, 5));
+                                            pst.executeUpdate();
+                                            referenceTf.setText("");
+                                            titleTf.setText("");
+                                            authorTf.setText("");
+                                            yearTf.setText("");
+                                            supervisorTf.setText("");
+                                            summaryTa.setText("");
         
-        listPfePan.add(btn,BorderLayout.NORTH);
+                                            JOptionPane.showMessageDialog(createPfePan, "Data changed in memoire table successfully.");
+                                        }
+                                    }
+                                } catch (SQLException ex) {
+                                    ex.printStackTrace();
+                                    JOptionPane.showMessageDialog(createPfePan, "Error updating data in memoire table");
+                                }
+                            }
+                        });
+                    } else {
+                        JOptionPane.showMessageDialog(createPfePan, "Please select a row to update.");
+                    }
+                }
+            });
+        
         return listPfePan;
     }
     //create add prof form panel
