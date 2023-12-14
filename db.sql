@@ -26,3 +26,5 @@ INSERT INTO `teacher`( `name`, `email`, `specialty`) VALUES ('Rezoug Abdellah','
 INSERT INTO `teacher`( `name`, `email`, `specialty`) VALUES ('Boulif Menouar','boumen7@gmail.com','Intelligence Artificielle ');
 INSERT INTO `teacher`( `name`, `email`, `specialty`) VALUES ('Riahla','meda.riahla@gmail.com','Sécurité Informatique');
 INSERT INTO `teacher`( `name`, `email`, `specialty`) VALUES ('Salmi Cheikh','salmi.cheikh@gmail.com','Base de Données');
+
+
