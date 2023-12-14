@@ -12,6 +12,7 @@ CREATE TABLE memoire (
     id_teacher INT  NOT NULL,
     title VARCHAR(255) NOT NULL,
     author VARCHAR(255) NOT NULL,
+    level VARCHAR(11) NOT NULL ,
     year YEAR NOT NULL,
     supervisor CHAR(25) NOT NULL,
     summary TEXT,
