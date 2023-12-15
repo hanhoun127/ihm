@@ -89,7 +89,7 @@ public class AdminPanel extends JPanel{
                 createPfePan = createPfePanel();
                 adminSpacePan.add(createPfePan, "createPfePan");
                 cardLayout.show(adminSpacePan, "createPfePan");
-                SwingUtilities.getWindowAncestor(AdminPanel.this).setSize(500, 370);
+                SwingUtilities.getWindowAncestor(AdminPanel.this).setSize(500, 390);
             }
         });
 
