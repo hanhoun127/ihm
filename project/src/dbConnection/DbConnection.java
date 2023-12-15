@@ -9,12 +9,4 @@ public class DbConnection {
     public static Connection connect() throws SQLException {
     return DriverManager.getConnection(URL,USER,PASSWORD);
     }
-    // methode to close the connection
-    public static void close() throws SQLException {
-        if (con != null && !con.isClosed()) {
-            con.close();
-        }
-    }
-
-
 }
