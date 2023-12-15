@@ -4,7 +4,6 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
-
 import dbConnection.DbConnection;
 
 import java.awt.*;
@@ -23,7 +22,6 @@ public class AdminPanel extends JPanel{
     String[] pfetab={"Reference","Title","Author","Level","Year","Supervisor","Summary"};
     String[] proftab={" Name","Email","Speciality"};
     String[] options = {"Licence", "Master", "Ingéniorat"};
-    
     public AdminPanel(CardLayout cardLayout, JPanel cardPanel) {
         setLayout(new BorderLayout());
         this.cardLayout = cardLayout;
@@ -77,11 +75,10 @@ public class AdminPanel extends JPanel{
 
         return loginPan;
     }
-
-    private JPanel createAdminSpace() {
+    
+        private JPanel createAdminSpace() {
         adminSpacePan = new JPanel();
         adminSpacePan.setLayout(cardLayout);
-
         JMenu pfeMenu = new JMenu("Memoire");
         JMenu profMenu = new JMenu("Professor");
 
@@ -297,6 +294,7 @@ public class AdminPanel extends JPanel{
             updatePfe.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
+                    SwingUtilities.getWindowAncestor(AdminPanel.this).setSize(500, 370);
                     int selectedRow = pfetable.getSelectedRow();
                     if (selectedRow != -1) {
                         createPfePan = createPfePanel();
@@ -488,6 +486,7 @@ public class AdminPanel extends JPanel{
             updateProf.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
+                    SwingUtilities.getWindowAncestor(AdminPanel.this).setSize(400, 300);
                     int selectedRow = proftable.getSelectedRow();
                     if (selectedRow != -1) {
                         createProfPan = createProfPanel();

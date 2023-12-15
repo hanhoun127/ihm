@@ -7,7 +7,6 @@ public class DbConnection {
     private static String PASSWORD="";
     // methode to etablish connection to database
     public static Connection connect() throws SQLException {
-    
     return DriverManager.getConnection(URL,USER,PASSWORD);
     }
     // methode to close the connection
