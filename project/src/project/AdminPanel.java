@@ -111,7 +111,7 @@ public class AdminPanel extends JPanel{
                 JPanel createProfPan = createProfPanel();
                 adminSpacePan.add(createProfPan, "createProfPan");
                 cardLayout.show(adminSpacePan, "createProfPan");
-                SwingUtilities.getWindowAncestor(AdminPanel.this).setSize(400, 300);
+                SwingUtilities.getWindowAncestor(AdminPanel.this).setSize(380, 200);
             }
         });
 
@@ -215,7 +215,7 @@ public class AdminPanel extends JPanel{
             }
             });
         createPfePan.add(addPfe);
-        EmptyBorder emptyBorder = new EmptyBorder(10, 10, 10, 10);
+        EmptyBorder emptyBorder = new EmptyBorder(2, 2, 2, 2);
         createPfePan.setBorder(emptyBorder);
         createPfePan.setLayout(new BoxLayout(createPfePan,BoxLayout.Y_AXIS));
         return createPfePan;
@@ -294,7 +294,7 @@ public class AdminPanel extends JPanel{
             updatePfe.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    SwingUtilities.getWindowAncestor(AdminPanel.this).setSize(500, 370);
+                     SwingUtilities.getWindowAncestor(AdminPanel.this).setSize(500, 390);
                     int selectedRow = pfetable.getSelectedRow();
                     if (selectedRow != -1) {
                         createPfePan = createPfePanel();
@@ -418,7 +418,7 @@ public class AdminPanel extends JPanel{
             }
             });
         createProfPan.add(addProf);
-        EmptyBorder emptyBorder = new EmptyBorder(25, 25, 25, 25);
+        EmptyBorder emptyBorder = new EmptyBorder(2, 2, 2, 2);
         createProfPan.setBorder(emptyBorder);
         createProfPan.setLayout(new BoxLayout(createProfPan,BoxLayout.Y_AXIS));
         return createProfPan;
@@ -486,7 +486,7 @@ public class AdminPanel extends JPanel{
             updateProf.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    SwingUtilities.getWindowAncestor(AdminPanel.this).setSize(400, 300);
+                    SwingUtilities.getWindowAncestor(AdminPanel.this).setSize(380 ,200);
                     int selectedRow = proftable.getSelectedRow();
                     if (selectedRow != -1) {
                         createProfPan = createProfPanel();
