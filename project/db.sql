@@ -10,7 +10,8 @@ CREATE TABLE teacher (
 );
 
 CREATE TABLE memoire (
-    referenceNbr VARCHAR(20) PRIMARY KEY NOT NULL ,
+    id INT  NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    referenceNbr VARCHAR(20) NOT NULL ,
     id_teacher INT NOT NULL,
     title VARCHAR(255) NOT NULL,
     author VARCHAR(255) NOT NULL,
