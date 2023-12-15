@@ -4,8 +4,14 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
-import dbConnection.DbConnection;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyleContext;
+import javax.swing.text.StyledDocument;
 
+import com.oracle.webservices.internal.api.EnvelopeStyle.Style;
+
+import dbConnection.DbConnection;
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.*;
@@ -27,8 +33,9 @@ public class AdminPanel extends JPanel{
         this.cardLayout = cardLayout;
         this.cardPanel = cardPanel;
         createAdminPanel();
-    }
 
+    }
+    
     private void createAdminPanel() {
         JPanel adminPan = new JPanel(new BorderLayout());
         JPanel loginPan = createLoginPanel();
@@ -223,9 +230,58 @@ public class AdminPanel extends JPanel{
 
     private JPanel displayPfe() {
         listPfePan = new JPanel();
+        JButton display=new JButton("Display infos");
+        display.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int selectedRow = pfetable.getSelectedRow();
+                 if (selectedRow != -1) {
+                String reference = (String) pfetable.getValueAt(selectedRow, 0);
+                String title = (String) pfetable.getValueAt(selectedRow, 1);
+                String author = (String) pfetable.getValueAt(selectedRow, 2);
+                String Level = (String) pfetable.getValueAt(selectedRow, 3);
+                String year = pfetable.getValueAt(selectedRow, 4).toString();
+                String supervisor = (String) pfetable.getValueAt(selectedRow, 5);
+                String summary =(String) pfetable.getValueAt(selectedRow, 6);
+                JFrame disp=new JFrame("information");
+                disp.setSize(300, 400);
+                disp.setResizable(false);
+    
+                JTextPane infos = new JTextPane();
+                infos.setText("memoire information:\n");
+                infos.setEditable(false);
+                StyledDocument styledDoc = infos.getStyledDocument();
+                javax.swing.text.Style regular = StyleContext.getDefaultStyleContext().getStyle(StyleContext.DEFAULT_STYLE);
+                javax.swing.text.Style bold = styledDoc.addStyle("bold", regular);
+                StyleConstants.setBold(bold, true);
+                try {
+                    
+                    styledDoc.insertString(styledDoc.getLength(),"Refernece: "+reference+"\n", regular);
+                    styledDoc.insertString(styledDoc.getLength(),"Title: "+title+"\n", regular);
+                    styledDoc.insertString(styledDoc.getLength(),"Author: "+author+"\n", regular);
+                    styledDoc.insertString(styledDoc.getLength(),"Level: "+Level+"\n", regular);
+                    styledDoc.insertString(styledDoc.getLength(),"Year: "+year+"\n", regular);
+                    styledDoc.insertString(styledDoc.getLength(),"Supervisor: "+supervisor+"\n", regular);
+                    styledDoc.insertString(styledDoc.getLength(), "Summary: "+summary+"\n", regular);
+                } catch (BadLocationException bl) {
+                    bl.printStackTrace();
+                }
+                JScrollPane scrollPane = new JScrollPane(infos);
+                infos.setFont(new Font("Tahoma", Font.PLAIN, 12));
+                infos.setBorder(null);
+                JPanel dispPan=new JPanel();
+                dispPan.add(scrollPane, BorderLayout.EAST);
+                dispPan.setLayout(new BoxLayout(dispPan,BoxLayout.Y_AXIS));
+                disp.add(dispPan);
+                disp.setVisible(true);
+            } else {
+            JOptionPane.showMessageDialog(createPfePan, "Please select a row to delete.");
+        }
+            }});
         removePfe=new JButton("Remove");
         updatePfe=new JButton("Update");
         JPanel btn=new JPanel();
+        btn.add(display);
         btn.add(updatePfe);
         btn.add(removePfe);
         listPfePan.add(btn);
